@@ -10,22 +10,9 @@ export default function BlackHole({ radius = 2 }: BlackHoleProps) {
         // Usamos geometríaSphere para crear una esfera.
         // <mesh> es el contenedor del objeto 3D
         // El 'args' son los parámetros de la esfera: [radio, segmentos_x, segmentos_y]
-        <mesh position={[0, 0, 0]}>
-            {/* Usamos <sphereGeometry> de Three.js dentro de una <mesh> de React Three Fiber.
-                'args' son los parámetros de la esfera:
-                [radio, segmentos_x, segmentos_y]
-                Cuanto mayores los números de segmentos, más suave se ve la esfera.
-            */}
+        <mesh position={[0, 0, 0]} scale={[1, 1, 0.15]}>
             <sphereGeometry args={[radius, 64, 64]} />
-
-            {/* Con esto le damos propiedades visuales:
-                - color: Un color entre azul oscuro y morado (
-                - roughness: Qué tan rugoso es (0 es muy brillante como cristal, 1 es mate)
-                - metalness: Qué tanto parece metal (0 es plástico, 1 es metal)
-            */}
-            <meshStandardMaterial 
-                color="#000000"
-            />
+            <meshBasicMaterial color="#000000" />
         </mesh>
     );
 }

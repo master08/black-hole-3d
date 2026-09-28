@@ -1,75 +1,46 @@
-# React + TypeScript + Vite
+# 🌌 Black Hole 3D (Gargantua Simulation)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simulador 3D interactivo y educativo de un agujero negro supermasivo inspirado en la física óptica de **Gargantua** (*Interstellar*, Kip Thorne) y la infografía científica de la NASA. Construido con **React 19**, **Three.js**, **React Three Fiber** y **TypeScript**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Características Visuales y Físicas
 
-## React Compiler
+- **Sombra Óptica del Agujero Negro**: Horizonte de eventos en negro azabache absoluto (`#000000`), calibrado en profundidad $Z \approx 0$ para evitar distorsiones volumétricas no relativistas.
+- **Anillo de Fotones Incandescente**: Fina cresta blanca ultra caliente ($100\%$ de opacidad) que bordea el horizonte y corona la lente gravitacional.
+- **Cúpula Gravitacional en Campana Senoidal**:
+  - Proyección de la luz de la cara posterior del disco arqueándose sobre y bajo el horizonte.
+  - Modelado radial en abanico sin paredes verticales ni cortes de máscara.
+  - Desvanecimiento térmico continuo: blanco $\to$ champán $\to$ oro $\to$ cobre $\to$ polvo cósmico $\to$ opacidad 0 en el vacío.
+- **Disco de Acreción Ecuatorial Plano**:
+  - Más de 1,200 partículas cósmicas y 900 filamentos orbitales estirados.
+  - Efecto Doppler relativista (el lado que se aproxima al observador es más brillante).
+- **Cámara Cinemática Restringida**:
+  - Controles orbitales acotados ($\pm 18^\circ$ horizontal, $\pm 8^\circ$ vertical) para permitir paralaje 3D interactivo preservando la perspectiva relativista frontal.
+- **Postprocesamiento Bloom**:
+  - Resplandor celestial cálido e incandescente a 60 FPS mediante `@react-three/postprocessing`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** + **TypeScript**
+- **Vite** con SWC (`@vitejs/plugin-react-swc`)
+- **Three.js** + **React Three Fiber** (`@react-three/fiber`)
+- **Drei** (`@react-three/drei`)
+- **Postprocessing** (`@react-three/postprocessing`)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Instalación y Uso Local
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Instalar dependencias
+pnpm install
 
-```
+# Iniciar servidor de desarrollo
+pnpm dev
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+# Construir para producción
+pnpm build
 ```
