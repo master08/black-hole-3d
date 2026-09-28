@@ -15,7 +15,7 @@ const HOTSPOTS: HotspotData[] = [
     title: 'Horizonte de Sucesos',
     subtitle: 'Punto de no retorno',
     description: 'Frontera espacial donde la velocidad de escape iguala a la velocidad de la luz. Nada, ni siquiera los fotones, puede escapar de esta región.',
-    position: [0, 0, 0.8]
+    position: [0, 0, 2.2]
   },
   {
     id: 'photon-sphere',
@@ -50,7 +50,7 @@ export default function EducationalHotspots() {
 
         return (
           <group key={spot.id} position={spot.position}>
-            <Html center distanceFactor={12}>
+            <Html center distanceFactor={12} zIndexRange={[100, 0]}>
               <div style={{ position: 'relative', pointerEvents: 'auto', userSelect: 'none' }}>
                 {/* Botón pulsante 3D */}
                 <button
