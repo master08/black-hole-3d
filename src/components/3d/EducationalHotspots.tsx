@@ -15,7 +15,7 @@ const HOTSPOTS: HotspotData[] = [
     title: 'Horizonte de Sucesos',
     subtitle: 'Punto de no retorno',
     description: 'Frontera espacial donde la velocidad de escape iguala a la velocidad de la luz. Nada, ni siquiera los fotones, puede escapar de esta región.',
-    position: [0, 0, 0.4]
+    position: [0, 0, 0.8]
   },
   {
     id: 'photon-sphere',
