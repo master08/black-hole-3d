@@ -3,6 +3,7 @@ import { OrbitControls, Stars } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import BlackHole from './components/3d/BlackHole';
 import AccretionDisk from './components/3d/AccretionDisk';
+import EducationalHotspots from './components/3d/EducationalHotspots';
 import './App.css';
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
 
         {/* 2. El Disco de Acreción + Cúpula Gravitacional 3D (con anillo de fotones integrado) */}
         <AccretionDisk radius={holeRadius} />
+
+        {/* 3. Puntos Educativos 3D Interactivos */}
+        <EducationalHotspots />
 
         {/* 4. Resplandor cinemático */}
         <EffectComposer>
