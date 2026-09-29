@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Html } from '@react-three/drei'
 
 interface HotspotData {
@@ -10,13 +10,6 @@ interface HotspotData {
 }
 
 const HOTSPOTS: HotspotData[] = [
-  {
-    id: 'horizon',
-    title: 'Horizonte de Sucesos',
-    subtitle: 'Punto de no retorno',
-    description: 'Frontera espacial donde la velocidad de escape iguala a la velocidad de la luz. Nada, ni siquiera los fotones, puede escapar de esta región.',
-    position: [0, 0, 2.2]
-  },
   {
     id: 'photon-sphere',
     title: 'Esfera de Fotones',
@@ -37,84 +30,117 @@ const HOTSPOTS: HotspotData[] = [
     subtitle: 'Beaming relativista',
     description: 'El gas de este lado viaja a velocidades cercanas a la de la luz en dirección hacia nosotros, lo que intensifica su brillo y eleva su temperatura aparente.',
     position: [-4.2, 0, 0.8]
+  },
+  {
+    id: 'horizon',
+    title: 'Horizonte de Sucesos',
+    subtitle: 'Punto de no retorno',
+    description: 'Frontera espacial donde la velocidad de escape iguala a la velocidad de la luz. Nada, ni siquiera los fotones, puede escapar de esta región.',
+    position: [0, -0.6, 2.0]
   }
 ]
 
+interface HotspotItemProps {
+  spot: HotspotData
+  isOpen: boolean
+  onToggle: () => void
+}
+
+function HotspotItem({ spot, isOpen, onToggle }: HotspotItemProps) {
+  return (
+    <Html
+      key={spot.id}
+      position={spot.position}
+      center
+      distanceFactor={12}
+      zIndexRange={[100, 0]}
+    >
+      <div style={{ position: 'relative', pointerEvents: 'auto', userSelect: 'none' }}>
+        {/* Botón pulsante 3D */}
+        <button
+          onClick={onToggle}
+          style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            background: isOpen ? '#ffdd44' : 'rgba(255, 255, 255, 0.85)',
+            border: '2px solid rgba(255, 255, 255, 0.95)',
+            boxShadow: isOpen 
+              ? '0 0 20px #ffbb00, 0 0 40px #ff8800' 
+              : '0 0 12px rgba(255, 255, 255, 0.7)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            color: '#000',
+            transition: 'all 0.25s ease',
+            transform: isOpen ? 'scale(1.15)' : 'scale(1)',
+            outline: 'none'
+          }}
+          title={spot.title}
+        >
+          {isOpen ? '×' : '+'}
+        </button>
+
+        {/* Tarjeta explicativa Sci-Fi (Glassmorphism) */}
+        {isOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              left: '40px',
+              top: '-20px',
+              width: '280px',
+              background: 'rgba(10, 12, 22, 0.85)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 200, 100, 0.35)',
+              borderRadius: '12px',
+              padding: '16px',
+              color: '#fff',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 170, 50, 0.15)',
+              zIndex: 1000,
+              animation: 'fadeIn 0.2s ease-out'
+            }}
+          >
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#ffb347', marginBottom: '4px', fontWeight: 600 }}>
+              {spot.subtitle}
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>
+              {spot.title}
+            </div>
+            <div style={{ fontSize: '12.5px', lineHeight: '1.5', color: 'rgba(255, 255, 255, 0.85)' }}>
+              {spot.description}
+            </div>
+          </div>
+        )}
+      </div>
+    </Html>
+  )
+}
+
 export default function EducationalHotspots() {
+  const [ready, setReady] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Retrasar el montaje hasta el siguiente ciclo para garantizar que el DOM del Canvas y sus eventos estén 100% listos
+    const timer = setTimeout(() => setReady(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (!ready) return null
 
   return (
     <group>
-      {HOTSPOTS.map((spot) => {
-        const isOpen = activeId === spot.id
-
-        return (
-          <group key={spot.id} position={spot.position}>
-            <Html center distanceFactor={12} zIndexRange={[100, 0]}>
-              <div style={{ position: 'relative', pointerEvents: 'auto', userSelect: 'none' }}>
-                {/* Botón pulsante 3D */}
-                <button
-                  onClick={() => setActiveId(isOpen ? null : spot.id)}
-                  style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    background: isOpen ? '#ffdd44' : 'rgba(255, 255, 255, 0.85)',
-                    border: '2px solid rgba(255, 255, 255, 0.95)',
-                    boxShadow: isOpen 
-                      ? '0 0 20px #ffbb00, 0 0 40px #ff8800' 
-                      : '0 0 12px rgba(255, 255, 255, 0.7)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '13px',
-                    fontWeight: 'bold',
-                    color: '#000',
-                    transition: 'all 0.25s ease',
-                    transform: isOpen ? 'scale(1.15)' : 'scale(1)',
-                    outline: 'none'
-                  }}
-                  title={spot.title}
-                >
-                  {isOpen ? '×' : '+'}
-                </button>
-
-                {/* Tarjeta explicativa Sci-Fi (Glassmorphism) */}
-                {isOpen && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: '40px',
-                      top: '-20px',
-                      width: '280px',
-                      background: 'rgba(10, 12, 22, 0.85)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(255, 200, 100, 0.35)',
-                      borderRadius: '12px',
-                      padding: '16px',
-                      color: '#fff',
-                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 170, 50, 0.15)',
-                      zIndex: 1000,
-                      animation: 'fadeIn 0.2s ease-out'
-                    }}
-                  >
-                    <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#ffb347', marginBottom: '4px', fontWeight: 600 }}>
-                      {spot.subtitle}
-                    </div>
-                    <div style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>
-                      {spot.title}
-                    </div>
-                    <div style={{ fontSize: '12.5px', lineHeight: '1.5', color: 'rgba(255, 255, 255, 0.85)' }}>
-                      {spot.description}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Html>
-          </group>
-        )
-      })}
+      {HOTSPOTS.map((spot) => (
+        <HotspotItem
+          key={spot.id}
+          spot={spot}
+          isOpen={activeId === spot.id}
+          onToggle={() => setActiveId(activeId === spot.id ? null : spot.id)}
+        />
+      ))}
     </group>
   )
 }
