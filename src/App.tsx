@@ -22,8 +22,8 @@ function App() {
           maxPolarAngle={Math.PI / 2 + 0.11}  // Máximo ~6° hacia abajo
           minAzimuthAngle={-Math.PI / 10}     // Máximo 18° a la izquierda (la mitad)
           maxAzimuthAngle={Math.PI / 10}      // Máximo 18° a la derecha (la mitad)
-          minDistance={7.0}                  // Zoom mínimo (no entrar al agujero)
-          maxDistance={12.0}                 // Zoom máximo
+          minDistance={12.0}                  // Zoom mínimo (no entrar al agujero)
+          maxDistance={20.0}                 // Zoom máximo
           enablePan={false}                  // Mantener el agujero siempre centrado
         />
         
