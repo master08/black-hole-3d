@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local private notes
+TUTOR_GUIDE_PROGRESS.md
